@@ -34,7 +34,7 @@ func Load() (*Config, error) {
 		return nil, fmt.Errorf("FLUXER_BOT_TOKEN is not set")
 	}
 	// only https origins are allowed for security reasons
-	if (cfg.FluxerOrigin == "" || cfg.FluxerOrigin[:8] != "https://") {
+	if len(cfg.FluxerOrigin) < 8 || cfg.FluxerOrigin[:8] != "https://" {
 		return nil, fmt.Errorf("FLUXER_ORIGIN must be a valid https URL")
 	}
 	return cfg, nil
