@@ -33,9 +33,7 @@ func main() {
 	}
 	defer st.Close()
 
-	links := 1// st.CountLinks(ctx)
-	seen := 1// st.CountSeenMessages(ctx)
-	log.Printf("store: %s ready (%d bridge links, %d seen messages)", cfg.DBPath, links, seen)
+	log.Printf("store: %s ready", cfg.DBPath)
 
 	discordBot, err := fluxerdiscord.New(cfg.DiscordToken)
 	if err != nil {
