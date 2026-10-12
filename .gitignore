@@ -1,0 +1,13 @@
+# Environment
+.env
+
+# Build output
+/Fluxify
+/Fluxify.exe
+/bin/
+
+# Local database
+/data/
+*.db
+*.db-shm
+*.db-wal
