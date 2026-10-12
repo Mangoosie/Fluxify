@@ -6,6 +6,5 @@ type BridgeLink struct {
 	DiscordChannelID string
 	FluxerGuildID    string
 	FluxerChannelID  string
-	CreatedAt        int64
+	CreatedAt        string
 }
-

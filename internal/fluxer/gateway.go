@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	neturl "net/url"
 	"log"
 	"runtime"
 	"strings"
@@ -33,6 +34,11 @@ func (c *Client) Run(ctx context.Context, onMessage func(Message)) error {
 		} else if strings.HasPrefix(url, "http") {
 			url = "ws" + strings.TrimPrefix(url, "http")
 		}
+	}
+	
+	parsed, err := neturl.Parse(url)
+	if (err != nil || parsed.Scheme != "wss" || parsed.Host == "") {
+		return fmt.Errorf("gateway URL must use wss")
 	}
 
 	backoff := initialBackoff
