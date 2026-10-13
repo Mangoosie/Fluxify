@@ -76,7 +76,7 @@ func main() {
 }
 
 func handleDiscordMessage(ctx context.Context, bot *fluxerdiscord.Bot, m *discordgo.MessageCreate) {
-	if m.Content != "!ping" {
+	if m.Content == "!ping" {
 		err := bot.SendMessage(ctx, m.ChannelID, "Pong!")
 
 		if err != nil {
@@ -85,11 +85,18 @@ func handleDiscordMessage(ctx context.Context, bot *fluxerdiscord.Bot, m *discor
 		return
 	}
 
-	// Check for other commands here. Not sure what we should make the command for linking tho??
+	if m.Content[:6] == "!link " && len(m.Content) >= 7 {
+		err := bot.SendMessage(ctx, m.ChannelID, "Linking channels using ID: "+m.Content[6:])
+
+		if err != nil {
+			log.Printf("discord: reply failed: %v", err)
+		}
+		return
+	}
 }
 
 func handleFluxerMessage(ctx context.Context, bot *fluxer.Bot, m fluxer.Message) {
-	if m.Content != "ping" {
+	if m.Content == "!ping" {
 		err := bot.SendMessage(ctx, m.ChannelID, "Pong!")
 
 		if err != nil {
@@ -98,4 +105,12 @@ func handleFluxerMessage(ctx context.Context, bot *fluxer.Bot, m fluxer.Message)
 		return
 	}
 
+	if m.Content[:6] == "!link " && len(m.Content) >= 7 {
+		err := bot.SendMessage(ctx, m.ChannelID, "Linking channels using ID: "+m.Content[6:])
+
+		if err != nil {
+			log.Printf("fluxer: reply failed: %v", err)
+		}
+		return
+	}
 }
