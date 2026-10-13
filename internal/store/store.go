@@ -31,13 +31,15 @@ func Open(ctx context.Context, path string) (*Store, error) {
 	}
 	db.SetMaxOpenConns(1)
 
-	if err := db.PingContext(ctx); err != nil {
+	err = db.PingContext(ctx)
+	if err != nil {
 		_ = db.Close()
 		return nil, fmt.Errorf("ping sqlite: %w", err)
 	}
 
 	s := &Store{db: db}
-	if err := s.migrate(ctx); err != nil {
+	err = s.migrate(ctx)
+	if err != nil {
 		_ = db.Close()
 		return nil, err
 	}
