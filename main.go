@@ -10,10 +10,10 @@ import (
 
 	"github.com/bwmarrin/discordgo"
 
-	"github.com/tobia/Fluxify/internal/config"
-	fluxerdiscord "github.com/tobia/Fluxify/internal/discord"
-	"github.com/tobia/Fluxify/internal/fluxer"
-	"github.com/tobia/Fluxify/internal/store"
+	"github.com/Mangoosie/Fluxify/internal/config"
+	fluxerdiscord "github.com/Mangoosie/Fluxify/internal/discord"
+	"github.com/Mangoosie/Fluxify/internal/fluxer"
+	"github.com/Mangoosie/Fluxify/internal/store"
 )
 
 func main() {
@@ -77,18 +77,25 @@ func main() {
 
 func handleDiscordMessage(ctx context.Context, bot *fluxerdiscord.Bot, m *discordgo.MessageCreate) {
 	if m.Content != "!ping" {
+		err := bot.SendMessage(ctx, m.ChannelID, "Pong!")
+
+		if err != nil {
+			log.Printf("discord: reply failed: %v", err)
+		}
 		return
 	}
-	if err := bot.SendMessage(ctx, m.ChannelID, "pong"); err != nil {
-		log.Printf("discord: reply failed: %v", err)
-	}
+
+	// Check for other commands here. Not sure what we should make the command for linking tho??
 }
 
 func handleFluxerMessage(ctx context.Context, bot *fluxer.Bot, m fluxer.Message) {
-	if m.Content != "!ping" {
+	if m.Content != "ping" {
+		err := bot.SendMessage(ctx, m.ChannelID, "Pong!")
+
+		if err != nil {
+			log.Printf("fluxer: reply failed: %v", err)
+		}
 		return
 	}
-	if err := bot.SendMessage(ctx, m.ChannelID, "pong"); err != nil {
-		log.Printf("fluxer: reply failed: %v", err)
-	}
+
 }
