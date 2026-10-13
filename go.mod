@@ -1,4 +1,4 @@
-module github.com/tobia/Fluxify
+module github.com/Mangoosie/Fluxify
 
 go 1.27.2
 
