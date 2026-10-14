@@ -76,6 +76,7 @@ func main() {
 }
 
 func handleDiscordMessage(ctx context.Context, bot *fluxerdiscord.Bot, m *discordgo.MessageCreate) {
+
 	if m.Content == "!ping" {
 		err := bot.SendMessage(ctx, m.ChannelID, "Pong!")
 
@@ -85,7 +86,7 @@ func handleDiscordMessage(ctx context.Context, bot *fluxerdiscord.Bot, m *discor
 		return
 	}
 
-	if m.Content[:6] == "!link " && len(m.Content) >= 7 {
+	if len(m.Content) >= 7 && m.Content[:6] == "!link " {
 		err := bot.SendMessage(ctx, m.ChannelID, "Linking channels using ID: "+m.Content[6:])
 
 		if err != nil {
@@ -105,7 +106,7 @@ func handleFluxerMessage(ctx context.Context, bot *fluxer.Bot, m fluxer.Message)
 		return
 	}
 
-	if m.Content[:6] == "!link " && len(m.Content) >= 7 {
+	if len(m.Content) >= 7 && m.Content[:6] == "!link " {
 		err := bot.SendMessage(ctx, m.ChannelID, "Linking channels using ID: "+m.Content[6:])
 
 		if err != nil {
